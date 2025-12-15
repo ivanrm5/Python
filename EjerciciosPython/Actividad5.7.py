@@ -47,6 +47,8 @@ class Empleado:
             print("Ya no estaba contratado")
 
 
+
+
 class Empresa:
     def __init__(self, nombre, direccion, industria, telefono, correo, empleados):
         self.nombre = nombre
