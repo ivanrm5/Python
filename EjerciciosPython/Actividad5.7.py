@@ -4,8 +4,8 @@ class Empleado:
 
     contador_empleado=0
 
-    def __init__(self,id_empleado, nombre, edad, cargo, salario, fecha_contratacion, correo,
-                 telefono, direccion, horario, contratado=True, fecha_salida= None):
+    def __init__(self,id_empleado: int, nombre: str, edad: int, cargo: str, salario: float, fecha_contratacion: datetime, correo: str,
+                 telefono: str, direccion: str, horario: str, contratado=bool, fecha_salida= datetime):
 
         self.id_empleado = id_empleado
         self.nombre = nombre
@@ -42,45 +42,72 @@ class Empleado:
         if self.contratado:
             self.contratado = False
             self.fecha_salida = datetime.now()
-            print("El empleado {self.nombre} ha sido despedido...}")
+            print(f"El empleado {self.nombre} ha sido despedido...")
+            Empleado.contador_empleado -= 1
+
         else:
-            print("Ya no estaba contratado")
+            print(f"{self.nombre} ya no estaba contratado")
 
 
 
 
 class Empresa:
-    def __init__(self, nombre, direccion, industria, telefono, correo, empleados):
+
+    contador_empresas=0
+
+    def __init__(self, nombre: str , direccion: str, industria: str, telefono: str, correo: str):
         self.nombre = nombre
         self.direccion = direccion
         self.industria = industria
         self.telefono = telefono
         self.correo = correo
-        self.empleados = empleados
+        self.empleados = []
+
+        Empresa.contador_empresas+=1
 
 
     def __str__(self):
-        pass
+        return (
+            f"nombre: {self.nombre}\n"
+            f"direccion: {self.direccion}\n"
+            f"industria: {self.industria}\n"
+            f"telefono: {self.telefono}\n"
+            f"correo: {self.correo}\n"
+            f"empleados: {self.empleados}\n"
+        )
 
-    def agregar_empleado(self):
-        pass
+    def agregar_empleado(self, empleado: Empleado):
+        self.empleados.append(empleado)
+    #append
 
-    def eliminar_empleado(self):
-        pass
+    def eliminar_empleado(self, empleado: Empleado):
+        self.empleados.remove(empleado)
+#remove
 
     def calcular_costo_salario(self):
+        total = 0
+
         pass
 
     def listar_empleado(self):
         pass
 
 def principal():
-    pass
+    print ("\nCREAR EMPLEADOS\n")
 
+    empleado1 = Empleado(1, "Juan", 25, "Desarrollador",
+                         2000, "20/02/2025", "juan@gmail.com",
+                         600000000, "Calle Ibiza 1", "8:00-14:00")
 
+    empleado2 = Empleado(2, "Marta", 26, "Desarrollador",
+                         2000, "21/02/2025", "marta@gmail.com",
+                         600000001, "Calle Ibiza 12", "8:00-14:00")
 
-
-
+    print (empleado1,"\n")
+    print (empleado2)
+    print (Empleado.contador_empleado)
+    empleado1.despedir()
+    print (Empleado.contador_empleado)
 
 
 
