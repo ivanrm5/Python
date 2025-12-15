@@ -99,13 +99,27 @@ def principal():
                          2000, "20/02/2025", "juan@gmail.com",
                          600000000, "Calle Ibiza 1", "8:00-14:00")
 
+
+    Empresa.agregar_empleado(empleado1)
+
     empleado2 = Empleado(2, "Marta", 26, "Desarrollador",
                          2000, "21/02/2025", "marta@gmail.com",
                          600000001, "Calle Ibiza 12", "8:00-14:00")
 
-    print (empleado1,"\n")
-    print (empleado2)
+    Empresa.agregar_empleado(empleado2)
+
+    empresa1 = Empresa("Ejemplo", "Calle Lugo", "Tecnologica", "910000000", "ejemplo@gmail.com")
+
+
+    print ("DATOS DE EMPLEADO 1\n",empleado1,"\n")
+    print ("DATOS DE EMPLEADO 2\n",empleado2, "\n")
+    print ("DATOS DE EMPRESA\n",empresa1)
+
+
+
     print (Empleado.contador_empleado)
+    print (Empresa.contador_empresas)
+
     empleado1.despedir()
     print (Empleado.contador_empleado)
 
