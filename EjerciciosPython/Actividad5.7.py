@@ -1,9 +1,12 @@
+from datetime import datetime
+
 class Empleado:
 
     contador_empleado=0
 
     def __init__(self,id_empleado, nombre, edad, cargo, salario, fecha_contratacion, correo,
-                 telefono, direccion, horario, contratado, fecha_salida):
+                 telefono, direccion, horario, contratado=True, fecha_salida= None):
+
         self.id_empleado = id_empleado
         self.nombre = nombre
         self.edad = edad
@@ -19,15 +22,30 @@ class Empleado:
 
         Empleado.contador_empleado+=1
 
-
-
-
     def __str__(self):
-        pass
-
+        return (
+            f"id_empleado: {self.id_empleado}\n"
+            f"nombre: {self.nombre}\n"
+            f"edad: {self.edad}\n"
+            f"cargo: {self.cargo}\n"
+            f"salario: {self.salario}\n"
+            f"fecha contratacion: {self.fecha_contratacion}\n"
+            f"correo: {self.correo}\n"
+            f"telefono: {self.telefono}\n"
+            f"direccion: {self.direccion}\n"
+            f"horario: {self.horario}\n"
+            f"contratado: {self.contratado}\n"
+            f"fecha_salida: {self.fecha_salida}\n"
+        )
 
     def despedir(self):
-        pass
+        if self.contratado:
+            self.contratado = False
+            self.fecha_salida = datetime.now()
+            print("El empleado {self.nombre} ha sido despedido...}")
+        else:
+            print("Ya no estaba contratado")
+
 
 class Empresa:
     def __init__(self, nombre, direccion, industria, telefono, correo, empleados):
