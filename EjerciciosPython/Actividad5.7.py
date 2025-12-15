@@ -35,7 +35,7 @@ class Empleado:
             f"direccion: {self.direccion}\n"
             f"horario: {self.horario}\n"
             f"contratado: {self.contratado}\n"
-            f"fecha_salida: {self.fecha_salida}\n"
+            f"fecha_salida: {self.fecha_salida}"
         )
 
     def despedir(self):
