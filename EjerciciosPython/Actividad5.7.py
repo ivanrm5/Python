@@ -48,10 +48,6 @@ class Empleado:
             f"fecha_salida: {self.fecha_salida}"
         )
 
-
-
-
-
 class Empresa:
 
     contador_empresas=0
@@ -128,9 +124,6 @@ def principal():
     empresa1.agregar_empleado(empleado1)
     empresa1.agregar_empleado(empleado2)
 
-
-    #empresa1.eliminar_empleado(1)
-    #empresa1.eliminar_empleado(2)
 
 #Lista de empleados, costo total de salarios
     print("Lista de empleados:\n")
