@@ -154,6 +154,7 @@ def principal():
 
     empresa1.eliminar_empleado(3)
     print("Lista de empleados:\n")
+
     empresa1.listar_empleado()
     print ("\nSalario total de los empleados:",empresa1.calcular_costo_salario())
 
