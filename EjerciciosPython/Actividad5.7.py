@@ -66,6 +66,34 @@ class Empresa:
         Empresa.contador_empresas+=1
 
 
+    def agregar_empleado(self, empleado: Empleado):
+        for empleado in self.empleados:
+            if empleado.id_empleado == empleado.id_empleado:
+                print("Ya existe el empleado")
+                return
+        self.empleados.append(empleado)
+    #append
+
+    def eliminar_empleado(self, id_empleado):
+        for empleado in self.empleados:
+            if empleado.id_empleado == id_empleado:
+                self.empleados.remove(empleado)
+                return
+        print("No existe el empleado")
+#remove
+
+    def calcular_costo_salario(self):
+        total = 0
+        for empleado in self.empleados:
+            if empleado.contratado:
+                total += empleado.salario
+
+
+    def listar_empleado(self):
+        for empleado in self.empleados:
+            print (empleado)
+
+
     def __str__(self):
         return (
             f"nombre: {self.nombre}\n"
@@ -73,55 +101,48 @@ class Empresa:
             f"industria: {self.industria}\n"
             f"telefono: {self.telefono}\n"
             f"correo: {self.correo}\n"
-            f"empleados: {self.empleados}\n"
+            f"empleados: {len(self.empleados)}\n"
         )
 
-    def agregar_empleado(self, empleado: Empleado):
-        self.empleados.append(empleado)
-    #append
-
-    def eliminar_empleado(self, empleado: Empleado):
-        self.empleados.remove(empleado)
-#remove
-
-    def calcular_costo_salario(self):
-        total = 0
-
-        pass
-
-    def listar_empleado(self):
-        pass
 
 def principal():
     print ("\nCREAR EMPLEADOS\n")
 
+#Crear dos empleados, una empresa. Agregar empleados a la empresa
     empleado1 = Empleado(1, "Juan", 25, "Desarrollador",
                          2000, "20/02/2025", "juan@gmail.com",
                          600000000, "Calle Ibiza 1", "8:00-14:00")
 
 
-    Empresa.agregar_empleado(empleado1)
+    empleado2 = Empleado(2, "Marta", 26, "Informatico",
+                         4000, "21/02/2025", "marta@gmail.com",
+                         600000001, "Calle Ibiza 12", "8:30-15:00")
 
-    empleado2 = Empleado(2, "Marta", 26, "Desarrollador",
-                         2000, "21/02/2025", "marta@gmail.com",
-                         600000001, "Calle Ibiza 12", "8:00-14:00")
-
-    Empresa.agregar_empleado(empleado2)
 
     empresa1 = Empresa("Ejemplo", "Calle Lugo", "Tecnologica", "910000000", "ejemplo@gmail.com")
 
 
-    print ("DATOS DE EMPLEADO 1\n",empleado1,"\n")
-    print ("DATOS DE EMPLEADO 2\n",empleado2, "\n")
-    print ("DATOS DE EMPRESA\n",empresa1)
+    empresa1.agregar_empleado(empleado1)
+    empresa1.agregar_empleado(empleado2)
+
+
+    #empresa1.eliminar_empleado(1)
+    #empresa1.eliminar_empleado(2)
 
 
 
-    print (Empleado.contador_empleado)
-    print (Empresa.contador_empresas)
+#Lista de empleados, costo total de salarios
+    print("Lista de empleados:\n")
+    print(empleado1)
 
-    empleado1.despedir()
-    print (Empleado.contador_empleado)
+
+
+#Añadir un nuevo empleado y mostrar de nuevo la lista y el costo
+
+
+
+
+#Eliminar un empleado y mostar de nuevo
 
 
 
