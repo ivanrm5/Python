@@ -8,14 +8,44 @@ class Coche:
 # Este método es el constructor de la clase. Solo puede haber 1
     def __init__(self, color, marca, modelo):
         #Todos estos son atributos de la clase.
-        self.color = color
+        self.__color = color
         self.aceleracion = 0
         self.velocidad = 0
         self.marca = marca
         self.modelo = modelo
         self.matricula = ""
-
         Coche.contadorcoches += 1
+
+
+#GETTERS
+    def get_color(self):
+        return self.__color
+    def get_marca(self):
+        return self.marca
+    def get_modelo(self):
+        return self.modelo
+    def get_matricula(self):
+        return self.matricula
+    def get_aceleracion(self):
+        return self.aceleracion
+    def get_velocidad(self):
+        return self.velocidad
+
+#SETTERS
+    def set_color(self, nuevo_color):
+        self.__color = nuevo_color
+    def set_marca(self, nueva_marca):
+        self.marca = nueva_marca
+    def set_modelo(self, nueva_modelo):
+        self.modelo = nueva_modelo
+    def set_matricula(self, nueva_matricula):
+        self.matricula = nueva_matricula
+    def set_aceleracion(self, nueva_aceleracion):
+        self.aceleracion = nueva_aceleracion
+    def set_velocidad(self, nueva_velocidad):
+        self.velocidad = nueva_velocidad
+
+
 
 #Método para acelerar
     def acelerar (self,aceleracion):
@@ -138,8 +168,25 @@ class CocheAutomatico(Coche):
 
 
 
+
 def principal():
 
+    c1 = Coche("Rojo", "Tesla", "Model S")
+    print("Color del coche", c1.get_color())
+    print("Marca del coche", c1.get_marca())
+    print("Modelo del coche", c1.get_modelo())
+
+
+    c1.set_color("Azul")
+    c1.set_marca("Toyota")
+    c1.set_modelo("Auris")
+
+    print("Color del coche", c1.get_color())
+    print("Marca del coche", c1.get_marca())
+    print("Modelo del coche", c1.get_modelo())
+
+
+    """
     print("\n--- PRUEBAS DE COCHE CON MARCHAS ---\n")
 
     c4 = Cochemarchas(6, "blanco", "Toyota", "Auris")
@@ -231,6 +278,8 @@ def principal():
     c1.rugir()
 
     print("\nTotal coches creados:", Coche.contadorcoches)
+    """
+
 
 
 
