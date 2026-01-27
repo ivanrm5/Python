@@ -91,7 +91,7 @@ class Empresa:
 
     def listar_empleado(self):
         for empleados in self.empleados:
-            print (empleados,"\n")
+            print (empleados.nombre,"\n")
 
 
 
@@ -106,20 +106,21 @@ class Empresa:
     def filtrar_edad_empleado(self, edad_min, edad_max):
         for empleados in self.empleados:
             if empleados.contratado and edad_min <= empleados.edad <= edad_max:
-                print (empleados,"\n")
+                print (empleados.nombre,"\n")
 
 
 
     def filtrar_por_cargo(self, cargo):
+        print("Lista de empleados por el cargo", cargo)
         for empleados in self.empleados:
             if empleados.contratado and empleados.cargo.lower() == cargo.lower():
-                print (empleados,"\n")
+                print (empleados.nombre,"\n")
 
 
     def filtrar_por_salario(self, salario):
         for empleados in self.empleados:
             if empleados.contratado and empleados.salario >= salario:
-                print (empleados,"\n")
+                print (empleados.nombre,"\n")
 
 
     def __str__(self):
@@ -154,15 +155,21 @@ def principal():
 
         #Crear empresas
         if opcion == "1":
-            nombre = input("Nombre : ")
-            direccion = input("Direccion : ")
-            industria = input("Industria : ")
-            telefono = input("Telefono : ")
-            correo = input("Correo : ")
 
-            empresa= Empresa(nombre, direccion, industria, telefono, correo)
-            empresas.append(empresa)
-            print("Empresa creada")
+            nombre = input("Nombre : ")
+            for e in empresas:
+                if e.nombre.lower() == nombre.lower():
+                    print("Ya existe la empresa")
+                    break
+                else:
+                    direccion = input("Direccion : ")
+                    industria = input("Industria : ")
+                    telefono = input("Telefono : ")
+                    correo = input("Correo : ")
+
+                    empresa= Empresa(nombre, direccion, industria, telefono, correo)
+                    empresas.append(empresa)
+                    print("Empresa creada")
 
         #Listar empresas
         elif opcion == "2":
@@ -233,19 +240,25 @@ def menu_empresa(empresa):
         if opcion == "1":
             id_empleado = int(input("ID Empleado : "))
             nombre = input("Nombre Empleado : ")
-            edad = int(input("Edad Empleado : "))
-            cargo = input("Cargo Empleado : ")
-            salario = float(input("Salario Empleado : "))
-            fecha = datetime.now()
-            correo = input("Correo Empleado : ")
-            telefono = input("Telefono : ")
-            direccion = input("Direccion : ")
-            horario = input("Horario Empleado : ")
 
-            nuevo_empleado = Empleado(id_empleado, nombre, edad, cargo,salario,
-                                      fecha, correo, telefono, direccion, horario)
+            for empleado in empresa.empleados:
+                if empleado.nombre == empleado.nombre:
+                    print("Ya existe el empleado")
+                    break
+                else:
+                    edad = int(input("Edad Empleado : "))
+                    cargo = input("Cargo Empleado : ")
+                    salario = float(input("Salario Empleado : "))
+                    fecha = datetime.now()
+                    correo = input("Correo Empleado : ")
+                    telefono = input("Telefono : ")
+                    direccion = input("Direccion : ")
+                    horario = input("Horario Empleado : ")
 
-            empresa.agregar_empleado(nuevo_empleado)
+                    nuevo_empleado = Empleado(id_empleado, nombre, edad, cargo,salario,
+                                              fecha, correo, telefono, direccion, horario)
+
+                    empresa.agregar_empleado(nuevo_empleado)
 
 
         elif opcion == "2":
@@ -257,9 +270,11 @@ def menu_empresa(empresa):
             empresa.despedir_empleado(id_empleado)
 
         elif opcion == "4":
-            print("Costo total", empresa.calcular_costo_salario)
+            print("Costo total", empresa.calcular_costo_salario())
+
         elif opcion == "5":
-            empresa.listar_empleados()
+            empresa.listar_empleado()
+
         elif opcion == "6":
             edad_minima = int(input("Edad Minima : "))
             edad_maxima = int(input("Edad Maxima : "))

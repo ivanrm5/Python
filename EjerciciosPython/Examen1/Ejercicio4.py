@@ -27,6 +27,6 @@ filtro={ciudad: hab for ciudad, hab in poblacion.items() if hab < cantidad_habit
 print("Diccionario completo")
 print(poblacion)
 
-print("Con filto")
+print("Con filtro")
 print(filtro)
 
