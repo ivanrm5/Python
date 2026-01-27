@@ -97,7 +97,7 @@ class Empresa:
 
     def despedir_empleado(self, id_empleado):
         for empleados in self.empleados:
-            if empleados.id_empleado == id_empleado.id_empleado:
+            if empleados.id_empleado == id_empleado:
                 empleados.despedir()
                 return
             print("No existe el empleado")
@@ -105,7 +105,7 @@ class Empresa:
 
     def filtrar_edad_empleado(self, edad_min, edad_max):
         for empleados in self.empleados:
-            if empleados.contratado and empleados.edad_min <= empleados.edad <= edad_max:
+            if empleados.contratado and edad_min <= empleados.edad <= edad_max:
                 print (empleados,"\n")
 
 
@@ -186,8 +186,8 @@ def principal():
             for empresa in empresas:
                 if len(empresa.empleados)<10:
                     print(empresa.nombre)
-                else:
-                    print("No existe empresas con menos de 10 empleados")
+            else:
+                print("No existe empresas con menos de 10 empleados")
 
         #Listar empresas con 10 o mas de 10 empleados
         elif opcion == "5":
@@ -195,8 +195,8 @@ def principal():
             for empresa in empresas:
                 if len(empresa.empleados) >= 10:
                     print(empresa.nombre)
-                else:
-                    print("No existe empresas con 10 o mas de 10 empleados")
+            else:
+                print("No existe empresas con 10 o mas de 10 empleados")
 
         #Procesar empleados de una empresa
         elif opcion == "6":
@@ -231,22 +231,48 @@ def menu_empresa(empresa):
 
 
         if opcion == "1":
+            id_empleado = int(input("ID Empleado : "))
+            nombre = input("Nombre Empleado : ")
+            edad = int(input("Edad Empleado : "))
+            cargo = input("Cargo Empleado : ")
+            salario = float(input("Salario Empleado : "))
+            fecha = datetime.now()
+            correo = input("Correo Empleado : ")
+            telefono = input("Telefono : ")
+            direccion = input("Direccion : ")
+            horario = input("Horario Empleado : ")
 
-            pass
+            nuevo_empleado = Empleado(id_empleado, nombre, edad, cargo,salario,
+                                      fecha, correo, telefono, direccion, horario)
+
+            empresa.agregar_empleado(nuevo_empleado)
+
+
         elif opcion == "2":
-            pass
+            id_empleado = int(input("ID Empleado : "))
+            empresa.eliminar_empleado(id_empleado)
+
         elif opcion == "3":
-            pass
+            id_empleado = int(input("ID Empleado : "))
+            empresa.despedir_empleado(id_empleado)
+
         elif opcion == "4":
-            pass
+            print("Costo total", empresa.calcular_costo_salario)
         elif opcion == "5":
-            pass
+            empresa.listar_empleados()
         elif opcion == "6":
-            pass
+            edad_minima = int(input("Edad Minima : "))
+            edad_maxima = int(input("Edad Maxima : "))
+            empresa.filtrar_edad_empleado(edad_minima, edad_maxima)
+
         elif opcion == "7":
-            pass
+            cargo = int(input("Cargo Empleado : "))
+            empresa.filtrar_por_cargo(cargo)
+
         elif opcion == "8":
-            pass
+            salario = float(input("Salario Empleado : "))
+            empresa.filtrar_por_salario(salario)
+
         elif opcion == "9":
             break
 
