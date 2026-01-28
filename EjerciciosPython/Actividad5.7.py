@@ -75,7 +75,7 @@ class Empresa:
         for empleados in self.empleados:
             if empleados.id_empleado == id_empleado:
                 self.empleados.remove(empleados)
-            return
+                return
         print("No existe el empleado")
 #remove
 
