@@ -37,4 +37,3 @@ for nombre, edad in estudiantes.items():
 promedio = sum(estudiantes.values())/len(estudiantes)
 print(f"Promedio de edad: {promedio}")
 
-print(estudiantes)
