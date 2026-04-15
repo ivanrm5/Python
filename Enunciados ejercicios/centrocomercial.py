@@ -20,17 +20,19 @@ class Cliente:
     #TODO Completa constructor, Atributo Estático, Actualización y Uso del Atributo Estático
     def __init__(self, nombre, nif, codigo_postal, edad):
 
-        self.id =
-        self.nombre =
-        self.nif =
-        self.codigo_postal =
-        self.edad =
-        self.cantidad_compras =
-        self.dinero_gastado =
+        self.id = id
+        self.nombre = nombre
+        self.nif = nif
+        self.codigo_postal = codigo_postal
+        self.edad = edad
+        self.cantidad_compras = 0
+        self.dinero_gastado = 0.0
+        self.tiendas_asociadas=[]
 
 
     def __str__(self):
-        return f"Cliente {self.id}: {self.nombre}, {self.edad} años, {self.cantidad_compras} compras, Total gastado: {self.dinero_gastado}€"
+        return (f"Cliente {self.id}: {self.nombre}, {self.edad} años, {self.cantidad_compras} compras, "
+                f"Total gastado: {self.dinero_gastado}€")
 
     # TODO Método comprar
 

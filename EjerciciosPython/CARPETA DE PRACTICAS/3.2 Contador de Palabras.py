@@ -18,9 +18,6 @@ for palabra in palabras:
     else:
         contador[palabra]=1
 
-
-
-
 print(f"Palabras en diccionario: {palabras} y veces repetidas: {contador}")
 
 
