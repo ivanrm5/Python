@@ -62,6 +62,9 @@ class Usuario:
         return f"Usuario {self.id_usuario}: {self.nombre} ({self.nif}), Libros prestados: {len(self.libros_prestados)}"
 
     # TODO: Implementar método tomar_libro
+    #Comprobar por el nombre si ya esta en la lista -> mostrar mensaje
+    #Añadir libro .append() ->Mostrar mensaje
+
     def tomar_libro(self, libro):
         """El usuario toma un libro prestado"""
         if libro in self.libros_prestados:
@@ -74,16 +77,23 @@ class Usuario:
 
 
     # TODO: Implementar método devolver_libro
+    #Comprueba en la lista de libros prestado cada libro por un id introducido para borrarlo
+    #borrar con .remove() -> mensaje
+    #mensaje de error
     def devolver_libro(self, id_libro):
         """El usuario devuelve un libro"""
-        for libro in libros_prestados
+        for libro in self.libros_prestados:
+            if libro.id_libro == id_libro:
+                self.libros_prestados.remove(libro)
+
+        print(f"El libro no esta en la lista")
 
 
 
     # TODO: Implementar método obtener_libros
     def obtener_libros(self):
         """Devuelve los libros que tiene prestados"""
-        pass
+        print(self.libros_prestados)
 
 
 def mostrar_menu():
@@ -134,9 +144,17 @@ def buscar_usuario_por_id(id_usuario, usuarios):
 # TODO: Implementar función libros_por_autor
 def libros_por_autor(autor, libros):
     """Devuelve todos los libros de un autor"""
+    libros_encontrados=[]
 
+    for libro in libros:
+        if libro.autor.lower() == autor.lower():
+            libros_encontrados.append(libro)
 
-    pass
+    if not libros_encontrados:
+        print("No hay libros de este autor")
+
+    return libros_encontrados
+
 
 
 if __name__ == "__main__":
@@ -190,6 +208,8 @@ if __name__ == "__main__":
                 id_usuario = int(input("ID del usuario: "))
                 
                 # TODO: Implementar lógica para prestar libro
+            except ValueError:
+                print("❌ Debes introducir números válidos")
                 pass
 
         elif opcion == "4":
@@ -198,6 +218,8 @@ if __name__ == "__main__":
                 id_usuario = int(input("ID del usuario: "))
                 # TODO: Implementar lógica para devolver libro
                 pass
+            except ValueError:
+                print("❌ Debes introducir números válidos")
 
         elif opcion == "5":
             # Ver libros de un usuario
@@ -205,12 +227,19 @@ if __name__ == "__main__":
                 id_usuario = int(input("ID del usuario: "))
                 # TODO: Implementar lógica para mostrar libros del usuario
                 pass
-
+            except ValueError:
+                print("❌ Debes introducir números válidos")
         elif opcion == "6":
             # Buscar por autor
             autor = input("Nombre del autor: ")
             # TODO: Implementar lógica para buscar libros por autor
-            pass
+            libros_encontrados = libros_por_autor(autor,libros)
+
+            if libros_encontrados:
+                for libro in libros_encontrados:
+                    print(libro)
+
+
 
         elif opcion == "7":
             print("\n¡Hasta luego!")
