@@ -52,8 +52,12 @@ class Cliente:
         self.dinero_gastado += videojuego.precio
 
     def devolver_videojuego(self, videojuego):
-        self.videojuegos_comprados.remove(videojuego)
-        self.dinero_gastado += videojuego.precio
+        for videojuego in self.videojuegos_comprados:
+            if videojuego.id_videojuego==id_videojuego:
+                self.videojuegos_comprados.remove(videojuego)
+                self.dinero_gastado -= videojuego.precio
+                return True
+        return False
 
     def obtener_videojuegos(self):
         return self.videojuegos_comprados
@@ -138,13 +142,13 @@ if __name__ == "__main__":
             for videojuego in videojuegos:
                 print(f"{videojuego}")
 
-        if opcion == "2":
+        elif opcion == "2":
             #Listar clientes
             for cliente in clientes:
                 print(f"{cliente}")
 
         #Vender videojuego
-        if opcion == "3":
+        elif opcion == "3":
             try:
                 #PASO 1 PEDIR ID
                 id_videojuego = int(input("Introduce un id de videojuego: "))
@@ -179,24 +183,86 @@ if __name__ == "__main__":
             except ValueError:
                 print("ERROR")
 
-        if opcion == "4":
+        elif opcion == "4":
             #Devolver videojuego
+            try:
+
+                #Pedir datos
+                id_cliente= int(input("Introduce un id de cliente: "))
+
+                #buscar cliente por id
+                cliente_encontrado = buscar_cliente_por_id(id_cliente, clientes)
+
+                if not cliente_encontrado:
+                    continue
+
+                #Lista de los juegos del cliente en una variable
+                videojuegos_cliente= cliente_encontrado.obtener_videojuegos()
+
+                if not videojuegos_cliente:
+                    print("No hay videojuegos")
+                    continue
+
+                #Mostrar lista de juegos comprados por el cliente
+                for videojuego in videojuegos_cliente:
+                    print (f"[{videojuego.id_videojuego}] - {videojuego.titulo} - {videojuego.precio}")
 
 
-            id_cliente= int(input("Introduce un id de cliente: "))
+                #Pedir id del videojuego
+                id_videojuego = int(input("Introduce un id de videojuego: "))
 
+                if cliente_encontrado.devolver_videojuego(id_videojuego):
+                    videojuego = buscar_videojuego_por_id(id_videojuego, videojuegos)
+                    if videojuego:
+                        videojuego.stock += 1
+                    print(f"✓ {cliente_encontrado.nombre} devolvió el videojuego")
+                else:
+                    print(f"Videojuego no encontrado")
+
+
+            except ValueError:
+                print("ERROR")
+        
+        elif opcion == "5":
+            #Listar videojuegos del cliente
+            # Pedir datos
+            id_cliente = int(input("Introduce un id de cliente: "))
+
+            # buscar cliente por id
             cliente_encontrado = buscar_cliente_por_id(id_cliente, clientes)
 
             if not cliente_encontrado:
                 continue
 
-            videojuegos_cliente= cliente_encontrado.obtener_videojuegos()
+            # Lista de los juegos del cliente en una variable
+            videojuegos_cliente = cliente_encontrado.obtener_videojuegos()
 
             if not videojuegos_cliente:
                 print("No hay videojuegos")
                 continue
 
+            # Mostrar lista de juegos comprados por el cliente
+            for videojuego in videojuegos_cliente:
+                print(f"[{videojuego.id_videojuego}] - {videojuego.titulo} - {videojuego.precio}")
+
+
+        elif opcion == "6":
+            plataforma=input("Introduce la plataforma: ").lower()
+            videojuego_encontrado=videojuegos_por_plataforma(plataforma, videojuegos)
+
+            if videojuego_encontrado:
+                for videojuego in videojuego_encontrado:
+                    print (videojuego.titulo)
+
+
         
+        elif opcion == "7":
+            print("Saliendo...")
+            break
+
+        else:
+            print("Opcion no valida")
+
 
 
 
