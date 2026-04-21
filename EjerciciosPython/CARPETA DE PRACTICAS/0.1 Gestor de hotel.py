@@ -40,13 +40,19 @@ class Hotel:
     # TODO Método liberar_habitacion
     # Parámetro: id_cliente
     # Acción: Quita cliente de la lista
-    def liberar_habitacion(self):
-        pass
+    def liberar_habitacion(self, id_cliente):
+        for cliente in clientes_centro:
+            if cliente.id_cliente == id_cliente:
+                self.huespedes_actuales.remove(cliente)
+                self.ocupacion_actual-=1
+                cliente.hotel_actual = None
+                return True
+        return False
 
     # TODO Método obtener_huespedes
     # Devuelve: Lista de huéspedes actuales
     def obtener_huespedes(self):
-        pass
+        return self.huespedes_actuales
 
 class Cliente:
     """Representa un cliente que se hospeda en un hotel"""
@@ -60,7 +66,7 @@ class Cliente:
         self.pasaporte=pasaporte
         self.email=email
         self.edad=edad
-        self.total_noches = 0
+        self.total_noches =0
         self.total_gastado = 0.0
         self.hotel_actual= None
 
@@ -72,19 +78,27 @@ class Cliente:
     # TODO Método registrar_hospedaje
     # Parámetros: numero_noches, precio_noche
     # Acción: Incrementa total_noches, calcula gasto
-    def registrar_hospedaje(self):
-        pass
+    def registrar_hospedaje(self, numero_noches, precio_noche):
+        self.total_noches += numero_noches
+        gasto = numero_noches * precio_noche
+        self.total_gastado += gasto
+        return gasto
 
     # TODO Método solicitar_servicio_extra
     # Parámetro: precio_servicio
     # Acción: Suma dinero a total_gastado
-    def solicitar_servicio_extra(self):
-        pass
+    def solicitar_servicio_extra(self, precio_servicio):
+        self.total_gastado += precio_servicio
 
     # TODO Método checkout
     # Acción: Devuelve el total a pagar y resetea datos
     def checkout(self):
-        pass
+        total=self.total_gastado
+        self.total_gastado = 0.0
+        self.total_noches = 0
+        return total
+
+
 
 # FUNCIONES GLOBALES
 
@@ -123,26 +137,74 @@ def gestionar_hotel(hotel):
             # Pedir número de noches y precio
             # Agregar cliente al hotel
             # Registrar hospedaje en cliente
-            pass
+
+            id_cliente = int(input("Introduce un id cliente"))
+            cliente = buscar_cliente_por_id(id_cliente, clientes_centro)
+
+            if not cliente:
+                continue
+            print(f"Cliente no encontrado con ID: {cliente.id_cliente}")
+
+            numero_noches=int(input("¿Cuantas noches quieres estar?"))
+            precio_noche= float(input("Agraga el precio por noche"))
+
+            if hotel.agregar_cliente_habitacion(cliente):
+                gasto= cliente.registrar_hospedaje(numero_noches, precio_noche)
+
+                print(f"{cliente.nombre} registrado en hotel {hotel.nombre}")
+                print(f"Noches: {numero_noches}, Total: {gasto}")
+
 
         elif opcion == "2":
             # TODO - Liberar Habitación
             # Pedir ID cliente a desalojar
             # Buscar cliente en hotel
             # Liberar habitación
-            pass
+
+            id_cliente=int(input("Introduce id de cliente para desalojar"))
+
+            if hotel.liberar_habitacion(id_cliente):
+                print(f"Habitacion liberada")
+            else:
+                print("Cliente no encontrado")
+
 
         elif opcion == "3":
             # TODO - Ver Huéspedes Actuales
             # Obtener lista de huéspedes del hotel
             # Mostrar cada uno
-            pass
+
+            huespedes= hotel.obtener_huespedes()
+            if not huespedes:
+                print("Sin huéspedes")
+            else:
+                for huesped in huespedes:
+                    print (huesped)
+
 
         elif opcion == "4":
             # TODO - Aplicar Servicio Extra
             # Pedir ID cliente
             # Pedir precio del servicio
             # Aplicar el servicio
+            id_cliente = int(input("ID del cliente: "))
+
+            # Buscar cliente en huéspedes del hotel
+            cliente_encontrado = None
+            for cliente in hotel.obtener_huespedes():
+                if cliente.id_cliente == id_cliente:
+                    cliente_encontrado = cliente
+                    break
+
+            if not cliente_encontrado:
+                print("❌ Cliente no está hospedado en este hotel")
+                continue
+
+            precio_servicio = float(input("Precio del servicio (€): "))
+            cliente_encontrado.solicitar_servicio_extra(precio_servicio)
+
+            print(f"✓ Servicio aplicado a {cliente_encontrado.nombre}")
+            print(f"  Nuevo total: {cliente_encontrado.total_gastado}€")
             pass
 
         elif opcion == "5":
@@ -151,12 +213,35 @@ def gestionar_hotel(hotel):
             # Mostrar total a pagar
             # Liberar habitación
             # Resetear datos del cliente
+            id_cliente = int(input("ID del cliente para checkout: "))
+
+            # Buscar cliente en huéspedes
+            cliente_encontrado = None
+            for cliente in hotel.obtener_huespedes():
+                if cliente.id_cliente == id_cliente:
+                    cliente_encontrado = cliente
+                    break
+
+            if not cliente_encontrado:
+                print("❌ Cliente no está hospedado en este hotel")
+                continue
+
+            # Procesar checkout
+            total = cliente_encontrado.checkout()
+            hotel.liberar_habitacion(id_cliente)
+
+            print(f"\n--- Checkout de {cliente_encontrado.nombre} ---")
+            print(f"Total a pagar: {total}€")
+            print("✓ Checkout completado")
             pass
 
         elif opcion == "6":
             # TODO - Ver Ocupación
             # Mostrar cuántas habitaciones están ocupadas
-
+            porcentaje = (hotel.ocupacion_actual / hotel.numero_habitaciones) * 100
+            print(f"\n--- Ocupación de {hotel.nombre} ---")
+            print(f"Habitaciones ocupadas: {hotel.ocupacion_actual}/{hotel.numero_habitaciones}")
+            print(f"Porcentaje: {porcentaje:.1f}%")
 
 
             pass
@@ -193,9 +278,6 @@ def gestionar_clientes(clientes_centro):
             except ValueError:
                 print("Datos incorrectos")
 
-
-
-
         elif opcion == "2":
             # TODO - Buscar Cliente por ID
             # Pedir ID
@@ -205,21 +287,25 @@ def gestionar_clientes(clientes_centro):
             id_cliente=int(input("Introduce un id de cliente: "))
             cliente_encontrado=buscar_cliente_por_id(id_cliente, clientes_centro)
 
-
-
-
+            if not cliente_encontrado:
+                continue
+            print(cliente_encontrado)
 
         elif opcion == "3":
             # TODO - Clientes VIP
             # Iterar clientes
             # Filtrar por total_noches > 5
             # Mostrar lista
-
+            vip = []
             for cliente in clientes_centro:
-                if cliente.total_noches > 5:
-                    return cliente
+                if cliente.total_gastado > 500:
+                    vip.append(cliente)
 
-            return None
+            if not vip:
+                print("No hay clientes Premium")
+            else:
+                for cliente in vip:
+                    print(f"{cliente.nombre} - {cliente.total_noches}")
 
 
         elif opcion == "4":
@@ -227,12 +313,16 @@ def gestionar_clientes(clientes_centro):
             # Iterar clientes
             # Filtrar por total_gastado > 500
             # Mostrar lista
-
+            premium=[]
             for cliente in clientes_centro:
                 if cliente.total_gastado > 500:
-                    return cliente
+                    premium.append(cliente)
 
-            return None
+            if not premium:
+                print("No hay clientes Premium")
+            else:
+                for cliente in premium:
+                    print(f"{cliente.nombre} - {cliente.total_gastado}")
 
 
         elif opcion == "5":
@@ -263,7 +353,7 @@ def buscar_hotel_por_id(id_hotel, hoteles):
     return None
 
 
-def buscar_cliente_por_id(id_cliente, clientes):
+def buscar_cliente_por_id(id_cliente, clientes_centro):
     """Busca un cliente por su ID"""
     for cliente in clientes_centro:
         if cliente.id_cliente == id_cliente:
