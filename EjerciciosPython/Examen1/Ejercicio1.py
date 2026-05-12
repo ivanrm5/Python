@@ -19,3 +19,4 @@ for caracter in cadena:
 print("Caracteres alfabéticos:",contador_alfabeticos)
 print("Caracteres no alfabéticos:",contador_noAlfabeticos)
 print("Invertida en mayúsculas",cadena.upper() [::-1])
+

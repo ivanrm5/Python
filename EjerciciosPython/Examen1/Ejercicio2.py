@@ -6,13 +6,16 @@ indicando el número de caracteres de cada palabra.
 También debe indicar cuantas palabras tiene la frase, entendiendo que cada palabra esta separada por espacios.
 """
 
-cadena=input("Introduce una cadena: ")
+cadena=input("Introduce dos palabras: ")
 contador_letras = 0
 
-if len(cadena.split()[0]) == len(cadena.split()[1]):
-   print(cadena, "es plana")
+if len(cadena.split()) > 1:
+    if len(cadena.split()[0]) == len(cadena.split()[1]):
+       print(cadena, "es plana")
+    else:
+       print(cadena, "no es plana")
 else:
-   print(cadena, "no es plana")
+   print("Inntroduzca mas de una palabra para saber si es plana")
 
 for caracter in cadena.split():
     if caracter != " ":
