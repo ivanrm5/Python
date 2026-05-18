@@ -74,7 +74,7 @@ print(f"Aprobados: {aprobados}")
 print(f"Suspendidos: {suspendidos}")
 
 
-print("\n Lista ordenada por calificacion")
+print("\n Lista ordenada por calificación")
 
 lista_ordenada=sorted(estudiantes.items(), key=lambda x: x[1], reverse=True)
 print(lista_ordenada)
